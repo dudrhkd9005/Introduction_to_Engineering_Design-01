@@ -12,6 +12,7 @@ void setup() {
 }
 
 void loop() {
+  Serial.println(++count);
   toggle = toggle_state(0);
   digitalWrite(PIN_LED, toggle);
   Serial.println("LED OFF");
