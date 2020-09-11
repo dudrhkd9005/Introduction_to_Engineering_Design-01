@@ -12,13 +12,12 @@ void setup() {
 }
 
 void loop() {
-  toggle = toggle_state(toggle);
-  toggle = 0;
+  toggle = toggle_state(0);
   digitalWrite(PIN_LED, toggle);
   Serial.println("LED OFF");
   delay(1000);
   Serial.println("LED ON");
-  toggle = 1;
+  toggle = toggle_state(1);
   digitalWrite(PIN_LED, toggle);
   delay(1000);
 }
