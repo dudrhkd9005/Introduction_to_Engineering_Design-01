@@ -8,6 +8,14 @@ void setup() {
   Serial.begin(115200);
 }
 
+int set_period(int period) {
+  return period;
+}
+
+int set_duty(int duty){
+  return duty * 0.01 * period;
+}
+
 void loop() {
   duty = set_duty(100);
   period = set_period(100); //원하는 period 값을 매개변수 인자값에 넣어준다. 0.1ms -> 100, 1ms -> 1000, 10ms -> 10000
@@ -33,12 +41,4 @@ void loop() {
    }
    repeat = 0;
   }
-}
-
-int set_period(int period) {
-  return period;
-}
-
-int set_duty(int duty){
-  return duty * 0.01 * period;
 }
