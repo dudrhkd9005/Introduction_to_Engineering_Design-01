@@ -35,10 +35,10 @@ void loop() {
   }
 }
 
-int set_period(int period) {     // 주기 설정
+int set_period(int period) {
   return period;
 }
 
-int set_duty(int duty){          // 실제 동작하는곳 밝기조절
+int set_duty(int duty){
   return duty * 0.01 * period;
 }
