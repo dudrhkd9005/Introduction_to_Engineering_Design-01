@@ -3,6 +3,7 @@
 #define PIN_TRIG 12
 #define PIN_ECHO 13
 
+
 // configurable parameters
 #define SND_VEL 346.0 // sound velocity at 24 celsius degree (unit: m/s)
 #define INTERVAL 25 // sampling interval (unit: ms)
@@ -16,6 +17,7 @@ float dist_min, dist_max, dist_raw, dist_ema, alpha, median; // unit: mm
 unsigned long last_sampling_time; // unit: ms
 float scale; // used for pulse duration to distance conversion
 int n;
+float average;
 
 void setup() {
 // initialize GPIO pins
@@ -31,7 +33,7 @@ void setup() {
   timeout = (INTERVAL / 2) * 1000.0; // precalculate pulseIn() timeout value. (unit: us)
   dist_raw = 0.0; // raw distance output from USS (unit: mm)
   scale = 0.001 * 0.5 * SND_VEL;
-  n = 30;
+  n = 10;
 // initialize serial port
   Serial.begin(115200);
 
@@ -49,10 +51,16 @@ void loop() {
   for(int i = 0; i < n; i++){
     dist_raw = USS_measure(PIN_TRIG,PIN_ECHO);
     raws[i] = dist_raw;
+    average += dist_raw;
   }
+  average /= n;
   bubble_sort(raws, n);
   dist_ema = (_DIST_ALPHA * dist_raw) + (1 - _DIST_ALPHA) * dist_ema;
-  median = raws[int(n/2)];
+  if(n % 2 == 0){
+    median = (abs(raws[int(n/2)] - average) < abs(raws[int(n/2)-1] - average)) ? raws[int(n/2)] : raws[int(n/2)-1];
+  }
+  else
+    median = raws[int(n/2)];
   
 // output the read value to the serial port
   Serial.print("Min:0,");
