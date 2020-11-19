@@ -4,8 +4,6 @@
 #define PIN_LED 9
 #define PIN_SERVO 10
 
-
-// configurable parameters
 #define _DUTY_MIN 670 // servo full clockwise position (0 degree)
 #define _DUTY_NEU 1670 // servo neutral position (90 degree)
 #define _DUTY_MAX 2670 // servo full counterclockwise position (180 degree)
@@ -25,9 +23,7 @@ int toggle_interval, toggle_interval_cnt;
 float pause_time; // unit: sec
 Servo myservo;
 float duty_target, duty_curr;
-int currentintervel = 20000;
 bool isup = true;
-bool isplay = false;
 int a, b; // unit: mm
 
 void setup() {
@@ -70,21 +66,16 @@ void loop() {
 
   if(!isup) {
     duty_curr += duty_chg_per_interval;
-    if(duty_curr > 1950) isplay = false;
   }
   else{
     duty_curr -= duty_chg_per_interval;
-    if(duty_curr < 800) isplay = false;
   }
-  if(!isplay){
-    if(dist_cali < 255){
-      isup = false;
-      isplay = true;
-    }
-    else if(dist_cali > 255){
-      isup = true;
-      isplay = true;
-    }
+  
+  if(dist_cali < 255){
+    isup = false;
+  }
+  else if(dist_cali > 255){
+    isup = true;
   }
   
   Serial.println(duty_curr);
