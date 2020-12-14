@@ -14,7 +14,8 @@
 #define _DUTY_NEU 1510  // 1650
 #define _DUTY_MAX 1810 // 2000
 
-#define _ITERM_MAX 100.0
+#define _ITERM_MAX 10.0
+
 #define _SERVO_ANGLE 30
 #define _SERVO_SPEED 100
 
@@ -25,7 +26,7 @@
 
 #define _KP 1.3 // 1.3    0.8 & 91
 #define _KD 54.3 //121 110 100 90
-#define _KI 0.001
+#define _KI 0.03
 Servo myservo;
 
 float dist_raw;
