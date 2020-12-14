@@ -91,6 +91,8 @@ void loop() {
         pterm = _KP * error_curr;
         dterm = _KD * (error_curr - error_prev);
         iterm += _KI * error_curr;
+        if(iterm > _ITERM_MAX) iterm = _ITERM_MAX;
+        if(iterm < - _ITERM_MAX) iterm = - _ITERM_MAX;
         control = pterm + dterm + iterm;
         duty_target = duty_neutral + control;
         // Limit duty_target within the range of [_DUTY_MIN, _DUTY_MAX]
@@ -98,8 +100,6 @@ void loop() {
         if(duty_target > _DUTY_MAX) duty_target = _DUTY_MAX; // upper limit
         // update error_prev
         error_prev = error_curr;
-        if(iterm > _ITERM_MAX) iterm = _ITERM_MAX;
-        if(iterm < - _ITERM_MAX) iterm = - _ITERM_MAX;
     }
   
     if(event_servo) {
