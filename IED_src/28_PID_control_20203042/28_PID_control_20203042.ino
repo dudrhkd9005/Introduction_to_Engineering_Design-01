@@ -14,8 +14,7 @@
 #define _DUTY_NEU 1510  // 1650
 #define _DUTY_MAX 1810 // 2000
 
-#define _ITERM_MAX 10.0
-
+#define _ITERM_MAX 100.0
 #define _SERVO_ANGLE 30
 #define _SERVO_SPEED 100
 
